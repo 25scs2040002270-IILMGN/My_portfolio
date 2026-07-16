@@ -87,7 +87,7 @@ const Navbar = ({ activeSection }: { activeSection: string }) => {
         {/* Brand logo — clicking scrolls back to the top (hero section) */}
         <a href="#hero" className="text-xl font-bold text-primary flex items-center gap-2">
           <Terminal size={24} /> {/* Terminal icon as the logo mark */}
-          <span className="hidden sm:inline">Amaan.dev</span> {/* Hidden on tiny screens */}
+          <span className="hidden sm:inline">Amaan_Sahzada</span> {/* Hidden on tiny screens */}
         </a>
 
         {/* Desktop navigation links — hidden on mobile (md:flex) */}
