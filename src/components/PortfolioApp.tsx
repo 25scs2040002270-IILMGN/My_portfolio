@@ -20,9 +20,8 @@ import {
   Server,        // Server rack icon — used in skills categories
   BookOpen,      // Open book icon — used in education timeline
   ExternalLink,  // Arrow-out-of-box icon — for external links
-  Mail,          // Envelope icon — contact section
-  Phone,         // Phone icon — contact section
-  MapPin,        // Location pin icon — contact section
+  Mail,          // Envelope icon
+  MapPin,        // Location pin icon — used in About card
   Linkedin,      // LinkedIn logo icon
   Send,          // Paper plane icon — submit button and chat app placeholder
   Loader2,       // Spinner icon for loading state
@@ -736,9 +735,9 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24">
-      <div className="container mx-auto px-6 max-w-4xl text-center">
+      <div className="container mx-auto px-6 max-w-2xl text-center">
 
-        {/* Intro text — centered above the two columns */}
+        {/* Intro text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -747,174 +746,119 @@ const Contact = () => {
         >
           <div className="text-primary font-mono mb-4">05. What's Next?</div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-12">
-            I'm currently looking for new opportunities, internships, and collaborations. Whether you have a question or just want to say hi, my inbox is always open.
+          <p className="text-muted-foreground max-w-xl mx-auto mb-10">
+            I'm currently looking for new opportunities, internships, and collaborations. Whether you have a question or just want to say hi, feel free to drop a message!
           </p>
         </motion.div>
 
-        {/* 2-column grid: contact info + form */}
-        <div className="grid md:grid-cols-2 gap-12 text-left">
+        {/* Centered Contact form card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-card border border-border p-6 md:p-8 rounded-2xl shadow-xl text-left"
+        >
+          <form className="space-y-4" onSubmit={handleSubmit}>
 
-          {/* ---- LEFT: Contact details ---- */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-6"
-          >
-            {/* Contact info card */}
-            <div className="bg-card border border-border p-6 rounded-xl space-y-6">
-
-              {/* Email row */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                  <Mail size={20} />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground font-mono">Email</div>
-                  {/* mailto: link opens the user's email client */}
-                  <a href="mailto:asahjada786@gmail.com" className="font-medium hover:text-primary transition-colors">
-                    asahjada786@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              {/* Phone row */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground font-mono">Phone</div>
-                  {/* tel: link opens the phone dialer on mobile */}
-                  <a href="tel:+919241813099" className="font-medium hover:text-primary transition-colors">
-                    +91-9241813099
-                  </a>
-                </div>
-              </div>
-
-              {/* Location row — informational only */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground font-mono">Location</div>
-                  <span className="font-medium">Naisarai Sar Syed Colony<br/>Ramgarh, Jharkhand</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Social icon buttons */}
-            <div className="flex gap-4 justify-center md:justify-start">
-              {/* GitHub */}
-              <a
-                href="https://github.com/25scs2040002270-IILMGN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all"
-              >
-                <Github size={20} />
-              </a>
-              {/* LinkedIn */}
-              <a
-                href="#"
-                className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-secondary hover:border-secondary transition-all"
-              >
-                <Linkedin size={20} />
-              </a>
-            </div>
-          </motion.div>
-
-          {/* ---- RIGHT: Contact form ---- */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <form className="space-y-4" onSubmit={handleSubmit}>
-
-              {/* Name field */}
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-mono text-muted-foreground">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  disabled={status === "loading"}
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              {/* Email field — type="email" adds browser validation */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-mono text-muted-foreground">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  disabled={status === "loading"}
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
-                  placeholder="john@example.com"
-                />
-              </div>
-
-              {/* Message textarea — rows={4} sets the default visible height */}
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-mono text-muted-foreground">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  disabled={status === "loading"}
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none disabled:opacity-50"
-                  placeholder="Hello Amaan..."
-                ></textarea>
-              </div>
-
-              {/* Submit button */}
-              <button
-                type="submit"
+            {/* Name field */}
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-mono text-muted-foreground">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
                 disabled={status === "loading"}
-                className={`w-full py-3 font-bold rounded-md transition-all neon-border flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:cursor-not-allowed ${
-                  status === "success"
-                    ? "bg-green-600 text-white"
-                    : status === "error"
-                    ? "bg-destructive text-destructive-foreground"
-                    : "bg-primary text-primary-foreground hover:bg-primary/90"
-                }`}
-              >
-                {status === "loading" ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Sending Message...
-                  </>
-                ) : status === "success" ? (
-                  <>
-                    <CheckCircle2 size={18} />
-                    Message Sent!
-                  </>
-                ) : (
-                  <>
-                    <Send size={18} />
-                    Send Message
-                  </>
-                )}
-              </button>
-            </form>
-          </motion.div>
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
+                placeholder="John Doe"
+              />
+            </div>
+
+            {/* Email field — type="email" adds browser validation */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-mono text-muted-foreground">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                disabled={status === "loading"}
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
+                placeholder="john@example.com"
+              />
+            </div>
+
+            {/* Message textarea — rows={4} sets the default visible height */}
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-sm font-mono text-muted-foreground">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                value={formData.message}
+                onChange={handleChange}
+                required
+                disabled={status === "loading"}
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none disabled:opacity-50"
+                placeholder="Hello Amaan..."
+              ></textarea>
+            </div>
+
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className={`w-full py-3 font-bold rounded-md transition-all neon-border flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:cursor-not-allowed ${
+                status === "success"
+                  ? "bg-green-600 text-white"
+                  : status === "error"
+                  ? "bg-destructive text-destructive-foreground"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+              }`}
+            >
+              {status === "loading" ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Sending Message...
+                </>
+              ) : status === "success" ? (
+                <>
+                  <CheckCircle2 size={18} />
+                  Message Sent!
+                </>
+              ) : (
+                <>
+                  <Send size={18} />
+                  Send Message
+                </>
+              )}
+            </button>
+          </form>
+        </motion.div>
+
+        {/* Social icon buttons */}
+        <div className="flex gap-4 justify-center mt-8">
+          <a
+            href="https://github.com/25scs2040002270-IILMGN"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all"
+            aria-label="GitHub"
+          >
+            <Github size={20} />
+          </a>
+          <a
+            href="#"
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-secondary hover:border-secondary transition-all"
+            aria-label="LinkedIn"
+          >
+            <Linkedin size={20} />
+          </a>
         </div>
       </div>
     </section>
