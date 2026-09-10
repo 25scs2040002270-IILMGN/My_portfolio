@@ -853,7 +853,9 @@ const Contact = () => {
             <Github size={20} />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/md-amaan-sahzada786"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-secondary hover:border-secondary transition-all"
             aria-label="LinkedIn"
           >
