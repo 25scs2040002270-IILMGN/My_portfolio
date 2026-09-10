@@ -25,7 +25,12 @@ import {
   MapPin,        // Location pin icon — contact section
   Linkedin,      // LinkedIn logo icon
   Send,          // Paper plane icon — submit button and chat app placeholder
+  Loader2,       // Spinner icon for loading state
+  CheckCircle2,  // Success checkmark icon
 } from "lucide-react";
+
+// Toast hook for showing interactive notifications
+import { useToast } from "@/hooks/use-toast";
 
 // Brand/technology icons from react-icons (Simple Icons set — company logos)
 import {
@@ -666,9 +671,69 @@ const Education = () => {
 
 // =============================================================================
 // CONTACT COMPONENT
-// Two-column layout: left = contact info card, right = contact form
+// Two-column layout: left = contact info card, right = interactive contact form
 // =============================================================================
 const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast({
+        title: "Please fill in all fields",
+        description: "Your name, email, and message are required to get in touch.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setStatus("loading");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.success || data.id || data.data)) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        toast({
+          title: "Message Sent Successfully!",
+          description: "Thanks for reaching out! Your message was delivered straight to my inbox.",
+        });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        throw new Error(data.error || "Failed to send message. Please try again.");
+      }
+    } catch (err: any) {
+      setStatus("error");
+      toast({
+        title: "Could not send message",
+        description: err.message || "Something went wrong. Feel free to email me directly at asahjada786@gmail.com",
+        variant: "destructive",
+      });
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
+
   return (
     <section id="contact" className="py-24">
       <div className="container mx-auto px-6 max-w-4xl text-center">
@@ -769,8 +834,7 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            {/* onSubmit prevents default browser form submission (page reload) */}
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" onSubmit={handleSubmit}>
 
               {/* Name field */}
               <div className="space-y-2">
@@ -778,7 +842,12 @@ const Contact = () => {
                 <input
                   type="text"
                   id="name"
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  disabled={status === "loading"}
+                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
                   placeholder="John Doe"
                 />
               </div>
@@ -789,7 +858,12 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={status === "loading"}
+                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:opacity-50"
                   placeholder="john@example.com"
                 />
               </div>
@@ -799,8 +873,13 @@ const Contact = () => {
                 <label htmlFor="message" className="text-sm font-mono text-muted-foreground">Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
-                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  disabled={status === "loading"}
+                  className="w-full bg-background border border-border rounded-md px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none disabled:opacity-50"
                   placeholder="Hello Amaan..."
                 ></textarea>
               </div>
@@ -808,10 +887,31 @@ const Contact = () => {
               {/* Submit button */}
               <button
                 type="submit"
-                className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-all neon-border flex items-center justify-center gap-2 mt-4"
+                disabled={status === "loading"}
+                className={`w-full py-3 font-bold rounded-md transition-all neon-border flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:cursor-not-allowed ${
+                  status === "success"
+                    ? "bg-green-600 text-white"
+                    : status === "error"
+                    ? "bg-destructive text-destructive-foreground"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90"
+                }`}
               >
-                <Send size={18} />
-                Send Message
+                {status === "loading" ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Sending Message...
+                  </>
+                ) : status === "success" ? (
+                  <>
+                    <CheckCircle2 size={18} />
+                    Message Sent!
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </motion.div>
