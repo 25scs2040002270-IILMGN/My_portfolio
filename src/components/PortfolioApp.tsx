@@ -23,9 +23,13 @@ import {
   Mail,          // Envelope icon
   MapPin,        // Location pin icon — used in About card
   Linkedin,      // LinkedIn logo icon
-  Send,          // Paper plane icon — submit button and chat app placeholder
+  Send,          // Paper plane icon — submit button
   Loader2,       // Spinner icon for loading state
   CheckCircle2,  // Success checkmark icon
+  Globe,         // Live demo globe icon
+  TrendingUp,    // Financial/growth icon for Growth-Mint
+  Layers,        // Mock test/layers icon
+  Cpu,           // Algorithms/CPU icon for LeetCode
 } from "lucide-react";
 
 // Toast hook for showing interactive notifications
@@ -439,9 +443,47 @@ const Skills = () => {
 
 // =============================================================================
 // PROJECTS COMPONENT
-// Showcases the E-Voting Application and a placeholder future project
+// Showcases real projects fetched from GitHub with live demos & source links
 // =============================================================================
 const Projects = () => {
+  const projectsData = [
+    {
+      title: "Growth-Mint",
+      subtitle: "Financial & Asset Growth Dashboard",
+      description:
+        "A modern financial analytics and portfolio management web app. Offers real-time growth tracking, intuitive visual asset breakdowns, and responsive interactive metrics.",
+      tags: ["React", "JavaScript", "Tailwind CSS", "Vercel"],
+      github: "https://github.com/25scs2040002270-IILMGN/Growth-Mint",
+      live: "https://growth-mint-chi.vercel.app",
+      icon: TrendingUp,
+      accent: "primary",
+      features: ["Asset Tracking", "Interactive Charts", "Responsive Dashboard"],
+    },
+    {
+      title: "Online Mock Test Platform",
+      subtitle: "Timed Assessment & Examination Engine",
+      description:
+        "An interactive web-based examination platform supporting timed test sessions, instant scoring, automated question progression, and detailed post-test score analysis.",
+      tags: ["React", "JavaScript", "CSS3", "Vercel"],
+      github: "https://github.com/25scs2040002270-IILMGN/Mock_Test",
+      live: "https://mock-test-tau-tawny.vercel.app",
+      icon: Layers,
+      accent: "secondary",
+      features: ["Timed Tests", "Instant Evaluation", "Question Navigation"],
+    },
+    {
+      title: "LeetCode & DSA Solutions",
+      subtitle: "Algorithms & Problem Solving Hub",
+      description:
+        "A curated repository of optimal Data Structures and Algorithms solutions in C++, covering Trees, Dynamic Programming, Graph algorithms, and Greedy paradigms.",
+      tags: ["C++", "Data Structures", "Algorithms", "Competitive Programming"],
+      github: "https://github.com/25scs2040002270-IILMGN/leet_code",
+      icon: Cpu,
+      accent: "primary",
+      features: ["Time/Space Optimized", "DP & Graphs", "DSA Problems"],
+    },
+  ];
+
   return (
     <section id="projects" className="py-24">
       <div className="container mx-auto px-6 max-w-5xl">
@@ -458,113 +500,161 @@ const Projects = () => {
           <div className="h-[1px] bg-border flex-grow"></div>
         </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-10">
 
-          {/* ---- MAIN PROJECT: E-Voting Application ---- */}
+          {/* ---- MAIN FEATURED PROJECT: E-Voting Application ---- */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            // "group" enables group-hover: title color changes on card hover
             className="group relative grid md:grid-cols-12 items-center gap-8 bg-card border border-border rounded-xl p-8 hover:border-primary/50 neon-border transition-all"
           >
-            {/* Left: project details (spans 7 of 12 columns on desktop) */}
+            {/* Left: project details */}
             <div className="md:col-span-7 space-y-4">
               <div className="text-primary font-mono text-sm">Featured Project</div>
 
-              {/* Title turns cyan when the card is hovered (group-hover) */}
               <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
                 E-Voting Application
               </h3>
 
               {/* Description card */}
-              <div className="bg-background border border-border p-5 rounded-lg text-muted-foreground relative z-10">
+              <div className="bg-background border border-border p-5 rounded-lg text-muted-foreground relative z-10 space-y-3">
                 <p>
-                  A highly secure online voting system designed for college and university elections. Built with a focus on integrity and transparency, enabling position-based voting and automated result calculation.
+                  A secure, tamper-proof electronic voting platform built for university and institutional elections. Features position-based ballots, encrypted vote counting, and real-time verifiable election results.
                 </p>
-                {/* Research paper note — highlighted in secondary (purple) color */}
-                <div className="mt-3 flex items-start gap-2 text-sm text-secondary">
+                {/* Research paper note */}
+                <div className="flex items-start gap-2 text-sm text-secondary font-medium">
                   <FileText size={16} className="mt-0.5 shrink-0" />
                   <p>Currently authoring a Research Paper detailing the secure architecture of this project.</p>
                 </div>
               </div>
 
-              {/* Tech stack — small monospace pills */}
-              <ul className="flex flex-wrap gap-3 font-mono text-sm text-muted-foreground">
-                <li>React</li>
-                <li>Node.js</li>
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>MySQL</li>
+              {/* Tech stack */}
+              <ul className="flex flex-wrap gap-2.5 font-mono text-xs text-muted-foreground">
+                <li className="px-2.5 py-1 bg-muted/40 rounded border border-border">React</li>
+                <li className="px-2.5 py-1 bg-muted/40 rounded border border-border">TypeScript</li>
+                <li className="px-2.5 py-1 bg-muted/40 rounded border border-border">Node.js</li>
+                <li className="px-2.5 py-1 bg-muted/40 rounded border border-border">MySQL</li>
+                <li className="px-2.5 py-1 bg-muted/40 rounded border border-border">Vercel</li>
               </ul>
 
-              {/* GitHub source link */}
-              <div className="flex gap-4 pt-2">
+              {/* Project links */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <a
-                  href="https://github.com/25scs2040002270-IILMGN"
+                  href="https://github.com/25scs2040002270-IILMGN/E-voting"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground hover:text-primary transition-colors flex items-center gap-2"
+                  className="text-foreground hover:text-primary transition-colors flex items-center gap-2 bg-background border border-border hover:border-primary/50 px-4 py-2 rounded-md text-sm font-medium"
                 >
-                  <Github size={20} />
-                  <span className="text-sm font-medium">Source Code</span>
+                  <Github size={18} />
+                  <span>Source Code</span>
+                </a>
+                <a
+                  href="https://e-voting-votecast.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-foreground bg-primary hover:bg-primary/90 transition-all flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold shadow-md shadow-primary/20"
+                >
+                  <ExternalLink size={18} />
+                  <span>Live Demo</span>
                 </a>
               </div>
             </div>
 
-            {/* Right: visual preview panel (spans 5 of 12 columns) */}
+            {/* Right: visual preview panel */}
             <div className="md:col-span-5 h-full min-h-[250px] bg-muted/30 rounded-lg border border-border relative overflow-hidden flex flex-col items-center justify-center p-6 group-hover:border-primary/30 transition-colors">
-              <Database className="w-16 h-16 text-primary/40 mb-4" /> {/* Decorative icon */}
-              {/* Feature pills */}
+              <Database className="w-16 h-16 text-primary/40 mb-4" />
               <div className="flex flex-wrap justify-center gap-2">
-                <span className="px-2 py-1 bg-background rounded border border-border text-xs">User Auth</span>
-                <span className="px-2 py-1 bg-background rounded border border-border text-xs">Vote Casting</span>
-                <span className="px-2 py-1 bg-background rounded border border-border text-xs">Results Engine</span>
+                <span className="px-2.5 py-1 bg-background rounded border border-border text-xs font-mono">User Auth</span>
+                <span className="px-2.5 py-1 bg-background rounded border border-border text-xs font-mono">Vote Casting</span>
+                <span className="px-2.5 py-1 bg-background rounded border border-border text-xs font-mono">Results Engine</span>
               </div>
             </div>
           </motion.div>
 
-          {/* ---- PLACEHOLDER PROJECT: Chat App (In Development) ---- */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }} // Staggered after the first card
-            className="group relative bg-card border border-border rounded-xl p-8 hover:border-secondary/50 transition-all flex flex-col justify-between"
-          >
-            {/* "In Development" badge — pulsing purple pill at top-right */}
-            <div className="absolute top-8 right-8">
-              <span className="px-3 py-1 bg-secondary/10 text-secondary border border-secondary/30 rounded-full text-xs font-mono font-bold animate-pulse">
-                In Development
-              </span>
-            </div>
+          {/* ---- GRID: Other GitHub Projects ---- */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {projectsData.map((project, idx) => {
+              const Icon = project.icon;
+              return (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.15 }}
+                  className="group relative bg-card border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-lg transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Top row: Icon & External links */}
+                    <div className="flex justify-between items-center mb-5">
+                      <div className={`w-12 h-12 bg-background border border-border rounded-lg flex items-center justify-center text-${project.accent} group-hover:border-${project.accent}/50 transition-colors`}>
+                        <Icon size={24} />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {project.github && (
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} GitHub Source`}
+                            className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-muted/50"
+                          >
+                            <Github size={18} />
+                          </a>
+                        )}
+                        {project.live && (
+                          <a
+                            href={project.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} Live Demo`}
+                            className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-muted/50"
+                          >
+                            <ExternalLink size={18} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
 
-            <div className="space-y-4 mb-8">
-              {/* Project icon */}
-              <div className="flex justify-between items-center">
-                <div className="w-12 h-12 bg-background border border-border rounded-lg flex items-center justify-center text-secondary">
-                  <Send size={24} /> {/* Chat/send icon represents the messaging app */}
-                </div>
-              </div>
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors mb-2">
+                      {project.title}
+                    </h3>
+                    <div className="text-xs font-mono text-primary/80 mb-3">{project.subtitle}</div>
 
-              {/* Title turns secondary (purple) on hover */}
-              <h3 className="text-xl font-bold text-foreground group-hover:text-secondary transition-colors">
-                Real-time Chat App
-              </h3>
+                    {/* Description */}
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                      {project.description}
+                    </p>
 
-              <p className="text-muted-foreground">
-                A robust real-time communication platform featuring instant messaging, user presence, and secure channels.
-              </p>
-            </div>
+                    {/* Feature pills */}
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {project.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="px-2 py-0.5 bg-background border border-border text-[11px] rounded text-muted-foreground font-mono"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-            {/* Planned tech stack for the future project */}
-            <ul className="flex flex-wrap gap-3 font-mono text-sm text-muted-foreground mt-auto">
-              <li>React</li>
-              <li>WebSockets</li>
-              <li>Node.js</li>
-            </ul>
-          </motion.div>
+                  {/* Tech stack */}
+                  <ul className="flex flex-wrap gap-2 font-mono text-xs text-muted-foreground pt-4 border-t border-border/60">
+                    {project.tags.map((tag) => (
+                      <li key={tag} className="text-muted-foreground/80">
+                        #{tag}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </section>
